@@ -17,6 +17,7 @@ namespace Webshop.Infrastructure.Data
         {
             modelBuilder.Entity<Shoe>()
                 .HasKey(s => s.productid);
+
             modelBuilder.Entity<User>()
                 .HasKey(u => u.Id);
         }

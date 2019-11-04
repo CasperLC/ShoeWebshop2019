@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Webshop.Core.Entities;
 using Webshop.Infrastructure.Data.Helper;
 
@@ -8,6 +9,11 @@ namespace Webshop.Infrastructure.Data
     {
         public static void SeedDB(WebShopDBContext context)
         {
+            context.Database.EnsureCreated();
+            if (context.Shoes.Any() || context.Users.Any())
+            {
+                return;
+            }
 
             var shoe1 = context.Shoes.Add(new Shoe()
             {

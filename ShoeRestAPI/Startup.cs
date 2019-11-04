@@ -94,24 +94,21 @@ namespace ShoeRestAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             using (var scope = app.ApplicationServices.CreateScope())
             {
-                var context = scope.ServiceProvider.GetService<WebShopDBContext>();
-                
+                // Initialize the database
+                var services = scope.ServiceProvider;
+                var dbContext = services.GetService<WebShopDBContext>();
+                DBInitializer.SeedDB(dbContext);
+            }
+
                 if (env.IsDevelopment())
                 {
-                    context.Database.EnsureDeleted();
-                    context.Database.EnsureCreated();
-                    DBInitializer.SeedDB(context);
                 }
                 else
                 {
-                    //DBInitializer.SeedDB(context); //For initializing azure DB
-                    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                     app.UseHsts();
                 }
-            }
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
