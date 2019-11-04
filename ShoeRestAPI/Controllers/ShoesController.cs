@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShoeWebshop.Core.ApplicationServices;
 using Webshop.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShoeRestAPI.Controllers
 {
@@ -21,6 +22,7 @@ namespace ShoeRestAPI.Controllers
         }
 
         // GET api/shoes
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Shoe>> Get([FromQuery] Filter filter)
         {
@@ -35,6 +37,7 @@ namespace ShoeRestAPI.Controllers
         }
 
         // GET api/shoes/5
+        [Authorize(Roles = "Administrator")]
         [HttpGet("{id}")]
         public ActionResult<Shoe> Get(int id)
         {
@@ -42,6 +45,7 @@ namespace ShoeRestAPI.Controllers
         }
 
         // POST api/shoes
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<Shoe> Post([FromBody] Shoe shoe)
         {
@@ -56,6 +60,7 @@ namespace ShoeRestAPI.Controllers
         }
 
         // PUT api/shoes/5
+        [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
         public ActionResult<Shoe> Put(int id, [FromBody] Shoe shoe)
         {
@@ -70,6 +75,7 @@ namespace ShoeRestAPI.Controllers
         }
 
         // DELETE api/shoes/5
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public ActionResult<Shoe> Delete(int id)
         {

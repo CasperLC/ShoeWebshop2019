@@ -1,4 +1,6 @@
-﻿using Webshop.Core.Entities;
+﻿using System.Collections.Generic;
+using Webshop.Core.Entities;
+using Webshop.Infrastructure.Data.Helper;
 
 namespace Webshop.Infrastructure.Data
 {
@@ -6,7 +8,6 @@ namespace Webshop.Infrastructure.Data
     {
         public static void SeedDB(WebShopDBContext context)
         {
-            context.Database.EnsureCreated();
 
             var shoe1 = context.Shoes.Add(new Shoe()
             {
@@ -39,7 +40,41 @@ namespace Webshop.Infrastructure.Data
 
             }).Entity;
 
+            // Create two users with hashed and salted passwords
+            string password = "1234";
+            byte[] passwordHashJoe, passwordSaltJoe, passwordHashAnn, passwordSaltAnn;
+            CreatePasswordHash(password, out passwordHashJoe, out passwordSaltJoe);
+            CreatePasswordHash(password, out passwordHashAnn, out passwordSaltAnn);
+
+            // Create two users with hashed and salted passwords
+            List<User> users = new List<User>
+            {
+                new User {
+                    Username = "UserJoe",
+                    PasswordHash = passwordHashJoe,
+                    PasswordSalt = passwordSaltJoe,
+                    IsAdmin = false
+                },
+                new User {
+                    Username = "AdminAnn",
+                    PasswordHash = passwordHashAnn,
+                    PasswordSalt = passwordSaltAnn,
+                    IsAdmin = true
+                }
+            };
+
+            context.Users.AddRange(users);
+
             context.SaveChanges();
+        }
+
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
         }
     }
 }

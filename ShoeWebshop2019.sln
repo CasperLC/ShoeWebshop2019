@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoeWebshop.Core", "ShoeWebshop.Core\ShoeWebshop.Core.csproj", "{DA3CBD12-7705-4DC9-B8B6-466BF8E5DD6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeWebshop.Core", "ShoeWebshop.Core\ShoeWebshop.Core.csproj", "{DA3CBD12-7705-4DC9-B8B6-466BF8E5DD6B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0DFFEF58-BD4F-4642-BC21-A5FF350FCE94}"
 EndProject
@@ -11,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{3647DE04-69F1-41EA-869D-F5C3EDF34DD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Core.Entities", "Webshop.Core.Entities\Webshop.Core.Entities.csproj", "{5A7CECED-541B-4E0E-BE32-FC1CD2497C65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Core.Entities", "Webshop.Core.Entities\Webshop.Core.Entities.csproj", "{5A7CECED-541B-4E0E-BE32-FC1CD2497C65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Infrastructure.Data", "Webshop.Infrastructure.Data\Webshop.Infrastructure.Data.csproj", "{0515B85E-C4BF-49C2-98B6-C6997E67D6A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Infrastructure.Data", "Webshop.Infrastructure.Data\Webshop.Infrastructure.Data.csproj", "{0515B85E-C4BF-49C2-98B6-C6997E67D6A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoeRestAPI", "ShoeRestAPI\ShoeRestAPI.csproj", "{BD0DBD66-ACA2-48B3-8BAA-162AA3CB6C4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeRestAPI", "ShoeRestAPI\ShoeRestAPI.csproj", "{BD0DBD66-ACA2-48B3-8BAA-162AA3CB6C4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
