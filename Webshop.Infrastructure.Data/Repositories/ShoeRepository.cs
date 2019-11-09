@@ -18,7 +18,10 @@ namespace Webshop.Infrastructure.Data.Repositories
 
         public Shoe ReadShoe(int id)
         {
-            return _context.Shoes.FirstOrDefault(s => s.productid == id);
+            return _context.Shoes
+                .Include(s => s.Order)
+                .ThenInclude(o => o.User)
+                .FirstOrDefault(s => s.productid == id);
         }
 
         public List<Shoe> ReadAllShoes(Filter filter)

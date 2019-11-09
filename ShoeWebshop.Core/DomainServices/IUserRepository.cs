@@ -8,10 +8,11 @@ namespace ShoeWebshop.Core.DomainServices
     public interface IUserRepository
     {
         User ReadUser(int id);
-        List<User> ReadAllUsers();
-        User CreateUser(User userToCreate);
-        User UpdateUser(User updatedUser);
+        List<User> ReadAllUsers(Filter filter = null);
+        User CreateUser(UserDTO userToCreate);
+        User UpdateUser(UserDTO updatedUser);
         User DeleteUser(int id);
+        List<User> ReadUserLogin();
         int Count();
     }
 }

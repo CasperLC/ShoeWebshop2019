@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Webshop.Core.Entities;
 using Webshop.Infrastructure.Data.Helper;
@@ -15,13 +16,14 @@ namespace Webshop.Infrastructure.Data
                 return;
             }
 
+
             var shoe1 = context.Shoes.Add(new Shoe()
             {
                 ProductName = "Shoe_Name",
                 Color = "Blue",
                 Size = 40.0,
                 Type = "Men",
-                Price = 200.0
+                Price = 200.0,
 
 
             }).Entity;
@@ -46,6 +48,19 @@ namespace Webshop.Infrastructure.Data
 
             }).Entity;
 
+            var order1 = context.Orders.Add(new Order()
+            {
+                OrderDate = DateTime.Now,
+                ActiveOrder = true,
+                ShoeList = new List<Shoe>
+                {
+                    shoe1,
+                    shoe2,
+                    shoe3
+                }
+
+            }).Entity;
+
             // Create two users with hashed and salted passwords
             string password = "1234";
             byte[] passwordHashJoe, passwordSaltJoe, passwordHashAnn, passwordSaltAnn;
@@ -59,7 +74,11 @@ namespace Webshop.Infrastructure.Data
                     Username = "UserJoe",
                     PasswordHash = passwordHashJoe,
                     PasswordSalt = passwordSaltJoe,
-                    IsAdmin = false
+                    IsAdmin = false,
+                    orderList = new List<Order>
+                    {
+                        order1
+                    }
                 },
                 new User {
                     Username = "AdminAnn",
@@ -68,6 +87,8 @@ namespace Webshop.Infrastructure.Data
                     IsAdmin = true
                 }
             };
+
+
 
             context.Users.AddRange(users);
 

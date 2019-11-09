@@ -9,6 +9,7 @@
         public string Color { get; set; } //Color of the product
         public double Price { get; set; } //Price of the product
         public string Type { get; set; } //Men, Women or Kids shoe
+        public Order Order { get; set; } // The order that the product is a part of
 
     }
 }

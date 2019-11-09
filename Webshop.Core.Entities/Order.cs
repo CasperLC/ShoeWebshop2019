@@ -8,7 +8,9 @@ namespace Webshop.Core.Entities
     {
         public int orderId { get; set; }
         public DateTime OrderDate { get; set; }
-        public List<Shoe> OrderList { get; set; }
+        public List<Shoe> ShoeList { get; set; }
+        public User User { get; set; }
+        public bool ActiveOrder { get; set; } // Active = shows as an order, Inactive = shows up in order history
 
     }
 }

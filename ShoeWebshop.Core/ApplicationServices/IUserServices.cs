@@ -9,8 +9,9 @@ namespace ShoeWebshop.Core.ApplicationServices
     {
         User ReadUser(int id);
         List<User> ReadAllUsers();
-        User CreateUser(User userToCreate);
-        User UpdateUser(User updatedUser);
+        User CreateUser(UserDTO userToCreate);
+        User UpdateUser(UserDTO updatedUser);
         User DeleteUser(int id);
+        List<User> AllFilteredUsers(Filter filter);
     }
 }

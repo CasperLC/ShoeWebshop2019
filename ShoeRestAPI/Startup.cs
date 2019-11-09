@@ -18,6 +18,7 @@ using Webshop.Infrastructure.Data;
 using Webshop.Infrastructure.Data.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Newtonsoft.Json;
 using Webshop.Infrastructure.Data.Helper;
 
 namespace ShoeRestAPI
@@ -68,6 +69,8 @@ namespace ShoeRestAPI
             services.AddScoped<IShoeRepository, ShoeRepository>();
             services.AddScoped<IUserServices, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             if (Environment.IsDevelopment())
             {
@@ -87,6 +90,12 @@ namespace ShoeRestAPI
             // is instantiated with a parameter. The parameter is the previously created
             // "secretBytes" array, which is used to generate a key for signing JWT tokens,
             services.AddSingleton<IAuthenticationHelper>(new AuthenticationHelper(secretBytes));
+
+            services.AddMvc().AddJsonOptions(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                opt.SerializerSettings.MaxDepth = 3;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
