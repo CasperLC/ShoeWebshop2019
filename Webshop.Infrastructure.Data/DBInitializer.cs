@@ -11,7 +11,7 @@ namespace Webshop.Infrastructure.Data
         public static void SeedDB(WebShopDBContext context)
         {
             context.Database.EnsureCreated();
-            if (context.Shoes.Any() || context.Users.Any())
+            if (context.Shoes.Any() || context.Users.Any() || context.Orders.Any())
             {
                 return;
             }

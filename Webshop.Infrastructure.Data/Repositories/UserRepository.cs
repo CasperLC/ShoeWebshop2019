@@ -88,6 +88,13 @@ namespace Webshop.Infrastructure.Data.Repositories
         public User ReadUser(int id)
         {
             return _context.Users
+                .Select(u => new User
+                {
+                    Id = u.Id,
+                    IsAdmin = u.IsAdmin,
+                    Username = u.Username,
+                    orderList = u.orderList
+                })
                 .Include(u => u.orderList)
                 .FirstOrDefault(u => u.Id == id);
         }

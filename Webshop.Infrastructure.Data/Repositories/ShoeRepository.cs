@@ -20,7 +20,6 @@ namespace Webshop.Infrastructure.Data.Repositories
         {
             return _context.Shoes
                 .Include(s => s.Order)
-                .ThenInclude(o => o.User)
                 .FirstOrDefault(s => s.productid == id);
         }
 
