@@ -10,12 +10,12 @@ namespace Webshop.Infrastructure.Data
         {
 
         }
-        public DbSet<Shoe> Shoes { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Shoe>()
                 .HasKey(s => s.productid);
 
@@ -36,5 +36,9 @@ namespace Webshop.Infrastructure.Data
                 .OnDelete(DeleteBehavior.SetNull);
 
         }
+
+        public DbSet<Shoe> Shoes { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

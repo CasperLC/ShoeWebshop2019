@@ -35,7 +35,7 @@ namespace Webshop.Infrastructure.Data.Repositories
 
         public Order CreateOrder(Order orderToCreate)
         {
-            context.Orders.Attach(orderToCreate).State = EntityState.Added;
+            context.Attach(orderToCreate).State = EntityState.Added;
             context.SaveChanges();
 
             for (int i = 0; i < orderToCreate.ShoeList.Count; i++)
@@ -52,8 +52,19 @@ namespace Webshop.Infrastructure.Data.Repositories
 
         public Order UpdateOrder(Order orderToUpdate)
         {
-            context.Orders.Attach(orderToUpdate).State = EntityState.Modified;
+            context.Attach(orderToUpdate).State = EntityState.Modified;
+            context.Entry(orderToUpdate).Collection(o => o.ShoeList).IsModified = true;
+
+            var shoes = context.Shoes.Where(s => s.Order.orderId == orderToUpdate.orderId && !orderToUpdate.ShoeList.Exists(sl => sl.productid == s.productid));
+
+            foreach (var shoe in shoes)
+            {
+                shoe.Order = null;
+                context.Entry(shoe).Reference(s => s.Order)
+                    .IsModified = true;
+            }
             context.SaveChanges();
+
             return orderToUpdate;
         }
 
