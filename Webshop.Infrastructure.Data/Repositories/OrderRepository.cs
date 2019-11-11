@@ -17,21 +17,6 @@ namespace Webshop.Infrastructure.Data.Repositories
         public Order ReadOrder(int id)
         {
             return context.Orders
-                .Select(o => new Order
-                {
-                    orderId = o.orderId,
-                    OrderDate = o.OrderDate,
-                    ActiveOrder = o.ActiveOrder,
-                    ShoeList = o.ShoeList,
-                    User = new User
-                    {
-                        Id = o.User.Id,
-                        Username = o.User.Username,
-                        IsAdmin = o.User.IsAdmin,
-                        orderList = o.User.orderList
-                    }
-                })
-                .Include(o => o.User)
                 .Include(o => o.ShoeList)
                 .FirstOrDefault(o => o.orderId == id);
         }
@@ -52,6 +37,16 @@ namespace Webshop.Infrastructure.Data.Repositories
         {
             context.Orders.Attach(orderToCreate).State = EntityState.Added;
             context.SaveChanges();
+
+            for (int i = 0; i < orderToCreate.ShoeList.Count; i++)
+            {
+                Shoe shoe = context.Shoes.FirstOrDefault(s => s.productid == orderToCreate.ShoeList[i].productid);
+                shoe.Order = orderToCreate;
+                orderToCreate.ShoeList[i] = shoe;
+                context.Orders.Attach(orderToCreate).State = EntityState.Modified;
+            }
+            context.SaveChanges();
+
             return orderToCreate;
         }
 
