@@ -54,6 +54,7 @@ namespace Webshop.Infrastructure.Data.Repositories
         {
             context.Attach(orderToUpdate).State = EntityState.Modified;
             context.Entry(orderToUpdate).Collection(o => o.ShoeList).IsModified = true;
+            context.Entry(orderToUpdate).Reference(o => o.User).IsModified = true;
 
             var shoes = context.Shoes.Where(s => s.Order.orderId == orderToUpdate.orderId && !orderToUpdate.ShoeList.Exists(sl => sl.productid == s.productid));
 

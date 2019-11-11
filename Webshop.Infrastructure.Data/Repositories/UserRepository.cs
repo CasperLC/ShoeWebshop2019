@@ -44,8 +44,20 @@ namespace Webshop.Infrastructure.Data.Repositories
                 IsAdmin = userToCreate.IsAdmin,
                 orderList = userToCreate.orderList
             };
+
+
             _context.Users.Attach(NewUser).State = EntityState.Added;
             _context.SaveChanges();
+
+            for (int i = 0; i < NewUser.orderList.Count; i++)
+            {
+                Order order = _context.Orders.FirstOrDefault(o => o.orderId == NewUser.orderList[i].orderId);
+                order.User = NewUser;
+                NewUser.orderList[i] = order;
+                _context.Users.Attach(NewUser).State = EntityState.Modified;
+            }
+            _context.SaveChanges();
+
             return NewUser;
         }
 
@@ -112,7 +124,19 @@ namespace Webshop.Infrastructure.Data.Repositories
                 IsAdmin = updatedUser.IsAdmin,
                 orderList = updatedUser.orderList
             };
-            _context.Entry(updatedUser).State = EntityState.Modified;
+
+
+            _context.Attach(TheUpdatedUser).State = EntityState.Modified;
+            _context.Entry(TheUpdatedUser).Collection(u => u.orderList).IsModified = true;
+
+            var orders = _context.Orders.Where(o => o.User.Id == TheUpdatedUser.Id && !TheUpdatedUser.orderList.Exists(ol => ol.orderId == o.orderId));
+
+            foreach (var order in orders)
+            {
+                order.User = null;
+                _context.Entry(order).Reference(o => o.User)
+                    .IsModified = true;
+            }
             _context.SaveChanges();
             return TheUpdatedUser;
         }
